@@ -37,10 +37,10 @@ export class App extends Component {
     super()
   }
   state = {
-    // pickupLocation: null,
-    // dropLocation: null,
-    location: null,
+    pickupLocation: null,
+    dropLocation: null,
     newLocation: [],
+    newRegion:[10,10],
     region: {
       latitude: 13.0827,
       longitude: 80.2707,
@@ -53,10 +53,10 @@ export class App extends Component {
     this.setState({ region });
   }
 
-  onMarkerPress = (region) => {
-    Alert.alert("new Coordinates: ",region.coordinate.latitude)
-    this.setState({newRegion: region.coordinate})
-  }
+  // onDragEnd = (region) => {
+  //   Alert.alert("new Coordinates: ", region)
+  //   this.setState({newRegion: region.coordinate})
+  // }
 
   componentDidMount() {
     Geolocation.getCurrentPosition(info => {
@@ -79,7 +79,7 @@ export class App extends Component {
             <View style={styles.body}>
               <View style={styles.sectionContainer}>
                 <View>
-                  <Text >Pickup Point: {this.state.newRegion} </Text>
+                  <Text >Pickup Point: {this.state.newRegion[0]} </Text>
                   {/* <Text> {pickupLocation ? pickupLocation : null} </Text> */}
                   <Button
                     title={this.state.pickupLocation == null ? "Select" : "Change"}
@@ -94,6 +94,7 @@ export class App extends Component {
 
                 <MapView
                   provider={PROVIDER_GOOGLE}
+                  // onPress={this.onDragEnd}
                   style={{ minHeight: 300, minWidth: '90%', padding: 10 }}
                   initialRegion={{
                     latitude: 13.0827,
@@ -109,7 +110,7 @@ export class App extends Component {
                       latitude: 13.0827,
                       longitude: 80.2707
                     }}
-                    onDragEnd = {this.onMarkerPress}
+                    // onDragEnd = {this.onDragEnd}
                     title={"Your Location"}
                     draggable>
                     <Callout>
