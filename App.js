@@ -53,10 +53,15 @@ export class App extends Component {
     this.setState({ region });
   }
 
+  onMarkerPress = (region) => {
+    Alert.alert("new Coordinates: ",region.coordinate.latitude)
+    this.setState({newRegion: region.coordinate})
+  }
+
   componentDidMount() {
     Geolocation.getCurrentPosition(info => {
       // Alert.alert("Location: ", JSON.stringify(info));
-      this.setState({ location: JSON.stringify(info) })
+      // this.setState({ location: JSON.stringify(info) })
     })
   }
 
@@ -74,7 +79,7 @@ export class App extends Component {
             <View style={styles.body}>
               <View style={styles.sectionContainer}>
                 <View>
-                  <Text >Pickup Point: </Text>
+                  <Text >Pickup Point: {this.state.newRegion} </Text>
                   {/* <Text> {pickupLocation ? pickupLocation : null} </Text> */}
                   <Button
                     title={this.state.pickupLocation == null ? "Select" : "Change"}
@@ -104,6 +109,7 @@ export class App extends Component {
                       latitude: 13.0827,
                       longitude: 80.2707
                     }}
+                    onDragEnd = {this.onMarkerPress}
                     title={"Your Location"}
                     draggable>
                     <Callout>
@@ -113,6 +119,7 @@ export class App extends Component {
                     </Callout>
                   </MapView.Marker>
                 </MapView>
+                <Text> {this.state.newRegion} </Text>
 
               </View>
             </View>
